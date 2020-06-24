@@ -1,0 +1,126 @@
+body {
+/*  padding: 0;
+  margin: 0;*/
+    font-family: -apple-system, BlinkMacSystemFont, "Microsoft yahei","Avenir Next", "Avenir",
+    "Segoe UI", "Lucida Grande", "Helvetica Neue", "Helvetica", "Fira Sans",
+    "Roboto", "Noto", "Droid Sans", "Cantarell", "Oxygen", "Ubuntu",
+    "Franklin Gothic Medium", "Century Gothic", "Liberation Sans", sans-serif;
+  padding: 3vh 1rem;
+  text-align: center;
+  justify-content: center;
+  /*background-image: url("censored-word-homophone.png") no-repeat center center fixed;*/
+/*    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+
+  background:rgba(191,193,221, 0.9);
+
+   /*background:
+      -webkit-linear-gradient(rgba(220,112,148, 0.4), rgba(135, 60, 255, 0.0) 80%),
+      -webkit-linear-gradient(-45deg, rgba(191,193,221, 0.9) 25%, rgba(72,219,205, 0.4) 75%);
+*/
+  
+}
+#title {
+	margin-top: 40px
+ 
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px
+
+}
+
+
+h2 {
+  font-size: 38px;
+  font-weight: 900;
+  margin: 0px
+
+}
+
+p{
+	font-size: 14px;
+}
+
+#main {
+	margin-top: 50px;
+	margin-bottom: 40px;
+  justify-content: center;
+  display: flex;
+}
+
+#type{
+  /*border-radius: 5pt;  */
+  height: 40px;;
+  border: 1px solid #000;
+  background: none;
+}
+
+#type:focus{
+  border-radius: 0pt; 
+  /*background: #eee; */
+  border: 2px solid #000;
+  outline: #000;
+}
+
+.searchButton{
+	margin-left: 10px;
+  font-size: 16px;
+  background: none;
+  border: 1px solid #000;
+  color: #fff;
+  border-color: #0d0d0d;
+  border-radius: 0px;
+  color: #0d0d0d;
+  outline: #000;
+  transition: color 0.1s ease 0s, background-color 0.15s ease 0s;
+}
+
+
+.searchButton:hover {
+  border-radius: 0;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+  outline: #000;
+  /*box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5), 0 10px 40px rgba(0, 0, 0, 0.2);*/
+}
+
+.searchButton:active {
+  outline: #000;
+
+  }
+
+#searcResultBox{
+	/*padding: 10px;*/
+	font-size: 18px;
+}
+
+.searchResult{
+	padding: 5px;
+}
+
+#bg {
+  
+  position: fixed; 
+ /* top: -50%; 
+  left: -50%;*/ 
+  width: 100%; 
+  height: auto;
+  z-index: -100;
+}
+#bg img {
+  
+/*  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto;*/ 
+  /*min-width: 50%;
+  min-height: 50%;*/
+}
