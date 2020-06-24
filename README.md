@@ -1,5 +1,5 @@
 # Chinese Homephone Search
-[Project Link](http://www.qianqian-ye.com/chinese-homephone-search/)
+[Project Link](http://www.qianqian-ye.com/chinese-homophone-search/)
 
 Type a Chinese word and search for its homophone.
 
