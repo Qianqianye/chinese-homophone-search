@@ -13,23 +13,37 @@
 
 <body>
     <div id="bg">
-    <img src="./censored-word-homophone.png" alt="">
+    <img src="asset/censored-word-homophone.png" alt="">
   </div>
+    <section class="container">
 
-  <div id = "title"> 
-    <h1>Chinese Homophone Search </h1>
-    <h2>中文同音词查找</h2>
-  <p>Type a Chinese word and search for its homophone. <br>
-    Try type in: 自由，言论，民主，和谐.
-  </p>
-  </div>
+<div class="side-column">
+    <div id = "title"> 
+        <h1>Chinese Homophone Search </h1>
+        <h2>中文同音词查找</h2>
+        </div>
+        
+        <h3>About</h3>
+        <p> In Chinese, a tonal language, words can be represented by different characters but sound similar. For example, 河蟹; pinyin: héxiè (river crab) sounds similar to 和谐; pinyin: héxié (harmony, used to mock the CCP espousal of a “harmonious society”). This tool translates censored words into their homophones — readers will know the real meaning of the word depending on the context
+        <br><br>
+        Made for The Future of Memory
+        </p>
+      
+      
+</div>
+      
+<div class="main-column">
+     <h3>Type a Chinese word and search for its homophone. <br>
+        Try type in: 自由，言论，民主，和谐.
+      </h3>
+      <div id ="main">
+        <input type="text" id="type" name="type"><br><br>
+        <button class="searchButton"onmousedown="searchHomophone()" >search</button>
+      </div>
 
-  <div id ="main">
-    <input type="text" id="type" name="type"><br><br>
-    <button class="searchButton"onmousedown="searchHomophone()" >search</button>
-  </div>
-
-  <div id = "searcResultBox"> </div>
+      <div id = "searcResultBox"> </div>
+</div>
+    </section>
 
 </body>
 </html>

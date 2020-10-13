@@ -6,7 +6,7 @@ body {
     "Roboto", "Noto", "Droid Sans", "Cantarell", "Oxygen", "Ubuntu",
     "Franklin Gothic Medium", "Century Gothic", "Liberation Sans", sans-serif;
   padding: 3vh 1rem;
-  text-align: center;
+/*  text-align: center;*/
   justify-content: center;
   /*background-image: url("censored-word-homophone.png") no-repeat center center fixed;*/
 /*    -webkit-background-size: cover;
@@ -14,7 +14,7 @@ body {
     -o-background-size: cover;
     background-size: cover;*/
 
-  background:rgba(191,193,221, 0.9);
+  background: #DCDAFF;
 
    /*background:
       -webkit-linear-gradient(rgba(220,112,148, 0.4), rgba(135, 60, 255, 0.0) 80%),
@@ -22,24 +22,76 @@ body {
 */
   
 }
+
+@font-face {
+    font-family: AdieuRegular;
+    src: url('asset/font/Adieu-Regular.otf') format('opentype');
+    src: url('asset/font/Adieu-Regular.woff') format('woff');
+    src: url('asset/font/Adieu-Regular.woff2') format('woff2');
+}
+
+.container {
+    display: -webkit-flex;
+    display: flex -webkit-flex-direction: row;
+    flex-direction: row;
+    padding: 4vw;
+    padding-top: 0vh;
+}
+
+
+.side-column {
+    width: 50%;
+    border-right: 2px solid #000;
+    margin-top: 0;
+    padding: 2vw;
+/*    margin-left: 5vw;*/
+/*    padding-left: vw;*/
+}
+
+.side-column--section h2 {
+    font-size: 3vw;
+    border-bottom: 2px solid #000;
+    padding-bottom: 20px
+}
+
+.main-column {
+    width: 50%;
+    padding: 4vw
+}
+
+
 #title {
-	margin-top: -20px
+	padding-bottom: 10px;
  
 }
 
 h1 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 5px
+    font-family: AdieuRegular;
+  font-size: 50px;
+/*  font-weight: 600;*/
+/*    padding-top: 0px;*/
+  
+    margin-top: 0px;
+    margin-bottom: 0px;
 
 }
 
 
 h2 {
+/*    font-family: AdieuRegular;*/
   font-size: 38px;
   font-weight: 900;
-  margin: 0px
+/*  margin: 0px;*/
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
 
+}
+
+h3 {
+    font-family: AdieuRegular;
+    font-size: 16px;
+/*    padding-bottom: 1vh;*/
 }
 
 p{
@@ -49,7 +101,7 @@ p{
 #main {
 	margin-top: 30px;
 	margin-bottom: 20px;
-  justify-content: center;
+/*  justify-content: center;*/
   display: flex;
 }
 
@@ -104,24 +156,9 @@ p{
 	padding: 5px;
 }
 
-#bg {
-  
-  /*position: fixed; */
- /* top: -50%; 
-  left: -50%;*/ 
-  width: 100%; 
-  height: auto;
-  z-index: -100;
-  margin-top: -35px;
-}
 #bg img {
-  
-/*  position: absolute; 
-  top: 0; 
-  left: 0; 
-  right: 0; 
-  bottom: 0; 
-  margin: auto;*/ 
-  /*min-width: 50%;
-  min-height: 50%;*/
+    width: 80%; 
+    margin-top:-30px;
+    margin-left:10%;
+    
 }
