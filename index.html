@@ -1,49 +1,125 @@
 <html>
-<head>
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <title>Chinese Homophone Search</title>  
-   <link rel="stylesheet" type="text/css" href="style.css" media="screen">
-   <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'>
-    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
-    <script language="javascript" type="text/javascript" src="sketch.js"></script>
-</head>
+    <title>Chinese Homophone Search</title>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <link
+      rel="stylesheet"
+      href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+    />
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"
+    ></script>
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="sketch.js"
+    ></script>
+  </head>
 
-<body>
-    <div id="bg">
-    <img src="asset/censored-word-homophone.png" alt="">
-  </div>
-    <section class="container">
-
-<div class="side-column">
-    <div id = "title"> 
-        <h1>Chinese Homophone Search </h1>
-        <h2>中文同音词查找</h2>
-        </div>
-        
-        <h3>About</h3>
-        <p> In Chinese, a tonal language, words can be represented by different characters but sound similar. For example, 河蟹; pinyin: héxiè (river crab) sounds similar to 和谐; pinyin: héxié (harmony, used to mock the CCP espousal of a “harmonious society”). This tool translates censored words into their homophones — readers will know the real meaning of the word depending on the context
-        <br><br>
-        Made for The Future of Memory
-        </p>
-      
-      
-</div>
-      
-<div class="main-column">
-     <h3>Type a Chinese word and search for its homophone. <br>
-        Try type in: 自由，言论，民主，和谐.
-      </h3>
-      <div id ="main">
-        <input type="text" id="type" name="type"><br><br>
-        <button class="searchButton"onmousedown="searchHomophone()" >search</button>
-      </div>
-
-      <div id = "searcResultBox"> </div>
-</div>
+  <body>
+    <!-- Hero Section with Animation -->
+    <section id="hero-section">
+      <div id="p5-canvas"></div>
+      <div id="scroll-indicator">↓ Scroll down to search ↓</div>
     </section>
 
-</body>
+    <!-- Main Content Section -->
+    <section id="main-content">
+      <section class="container">
+        <div class="main-column">
+          <!-- Title Section -->
+          <div id="title" class="scroll-animate">
+            <h1>Chinese Homophone Search</h1>
+            <h2>中文同音词查找</h2>
+          </div>
+
+          <!-- Search Section -->
+          <div class="search-section scroll-animate delay-1">
+            <div class="description-section">
+              <h3>Type a Chinese word and search for its homophone.</h3>
+              <h3>
+                Try typing or click:
+                <span class="example-word colorful-link">自由</span>
+                <span class="example-word colorful-link">言论</span>
+                <span class="example-word colorful-link">民主</span>
+                <span class="example-word colorful-link">和谐</span>
+              </h3>
+            </div>
+            <div id="main" class="scroll-animate delay-2">
+              <input
+                type="text"
+                id="type"
+                name="type"
+                placeholder="输入中文词汇..."
+              />
+              <button class="searchButton" onclick="searchHomophone()">
+                search
+              </button>
+            </div>
+            <div id="searcResultBox" class="scroll-animate delay-3"></div>
+          </div>
+
+          <!-- About Section -->
+          <div class="about scroll-animate delay-4">
+            <h3>About</h3>
+            <p>
+              In Chinese, a tonal language, many words share similar sounds but
+              are written with different characters. For example,
+              <a
+                href="https://en.wikipedia.org/wiki/Euphemisms_for_Internet_censorship_in_China"
+                class="colorful-link"
+                >河蟹</a
+              >
+              (héxiè; "river crab") is a homophone of 和谐 (héxié; "harmony"), a
+              term co-opted by the CCP to promote a "harmonious society" and
+              later critiqued online. This tool converts
+              <a
+                href="https://en.wikipedia.org/wiki/Censorship_in_China"
+                class="colorful-link"
+                >censored</a
+              >
+              terms into their homophones, allowing readers to infer the
+              intended meaning from context while also helping bypass AI-driven
+              censorship systems.
+            </p>
+            <p>
+              This tool was designed and built by
+              <a href="https://qianqian-ye.com/" class="colorful-link"
+                >Qianqian Ye</a
+              >, in collaboration with
+              <a href="https://www.xiaoweiwang.com/" class="colorful-link"
+                >Xiaowei Wang</a
+              >, as a component of the
+              <a
+                href="https://qianqian-ye.com/algorithmic-censorship-resistance-toolkit/"
+                class="colorful-link"
+                >Algorithmic Censorship Resistance Toolkit</a
+              >
+              within
+              <a
+                href="https://futureofmemory.netlify.app/"
+                class="colorful-link"
+                >The Future of Memory</a
+              >, a project commissioned through the
+              <a
+                href="https://www.mozillafoundation.org/en/blog/toolkit-outsmarting-ai-powered-censorship/"
+                class="colorful-link"
+                >Mozilla</a
+              >
+              Creative Media Award. The tool uses homophones from this
+              <a
+                href="https://github.com/LiangsLi/ChineseHomophones"
+                class="colorful-link"
+                >data source</a
+              >.
+            </p>
+          </div>
+        </div>
+  </body>
 </html>
