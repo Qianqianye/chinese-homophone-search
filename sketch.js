@@ -1,4 +1,3 @@
-// P5.js Animation Code
 const words = [
   "CHINESE",
   "HOMOPHONE",
@@ -60,7 +59,6 @@ function draw() {
 
   // Draw all rows
   for (const row of rows) {
-    // Move the row
     row.x += row.speed;
 
     // Draw all words in this row
@@ -126,13 +124,22 @@ function generateRows() {
     }
 
     // Calculate how many words we need to fill the screen width
-    const targetWidth = window.innerWidth * 2; // 200% of screen width for better coverage and seamless loop
+    const targetWidth = window.innerWidth * 3; // Increased to 300% for better coverage
     let currentOffset = 0;
 
     while (currentOffset < targetWidth) {
-      const word = window.random(words);
-      const wordWidth = window.textWidth(word) + totalHorizontalPadding;
+      let word;
       let wordColor;
+
+      // Ensure same word doesn't appear consecutively
+      do {
+        word = window.random(words);
+      } while (
+        row.words.length > 0 &&
+        row.words[row.words.length - 1].text === word
+      );
+
+      const wordWidth = window.textWidth(word) + totalHorizontalPadding;
 
       // Ensure same color doesn't appear consecutively
       do {
@@ -155,11 +162,12 @@ function generateRows() {
 
     row.totalWidth = currentOffset;
 
-    // Start position for seamless loop
     if (row.speed > 0) {
-      row.x = -row.totalWidth;
+      // For rightward moving rows, start with words visible from the left
+      row.x = window.random(-row.totalWidth * 0.5, 0);
     } else {
-      row.x = window.innerWidth;
+      // For leftward moving rows, start with words visible from the right
+      row.x = window.random(window.innerWidth * 0.5, window.innerWidth);
     }
 
     rows.push(row);
@@ -210,7 +218,6 @@ window.addEventListener("load", handleScrollAnimations);
 var homephoneData;
 var foundHomephone = [];
 
-// Load JSON data when page loads
 fetch("./sample.json")
   .then((response) => response.json())
   .then((data) => {
@@ -234,10 +241,7 @@ function buildFoundDivs(filterItem, inList) {
         newDiv.textContent = valN;
         newDiv.className = "searchResult";
 
-        let shuffledColors = shuffle(palette);
-
-        newDiv.style.backgroundColor =
-          shuffledColors[colorIndex % shuffledColors.length];
+        newDiv.style.backgroundColor = palette[colorIndex % palette.length];
         colorIndex++;
 
         destDiv.appendChild(newDiv);
