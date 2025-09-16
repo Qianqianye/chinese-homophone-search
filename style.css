@@ -268,16 +268,10 @@ body {
 
 /* Responsive improvements */
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    padding: 2vw;
-  }
-
   .main-column {
-    width: 100%;
-    padding: 6vw;
-    margin-left: 0;
+    margin: auto;
     gap: 30px;
+    width: 75%;
   }
 
   #main {
@@ -288,7 +282,7 @@ body {
 
   #type {
     width: 100%;
-    max-width: 320px;
+    /* max-width: 320px; */
   }
 
   .searchButton {
