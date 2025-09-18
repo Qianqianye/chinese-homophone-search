@@ -25,37 +25,71 @@ const words = [
 ];
 
 const palette = [
-  "rgb(255, 20, 147)", // Deep Pink
   "rgb(50, 100, 200)", // Blue
   "rgb(0, 51, 204)", // Blue
-  "rgb(255, 69, 0)", // Red Orange
-  "rgb(50, 205, 50)", // Lime Green
-  "rgb(255, 0, 255)", // Magenta
-  "rgb(255, 215, 0)", // Gold
+  "rgb(10, 10, 255)", // Bright Blue
   "rgb(138, 43, 226)", // Blue Violet
-  "rgb(0, 255, 127)", // Spring Green
-  "rgb(255, 20, 20)", // Bright Red
-  "rgb(30, 144, 255)", // Dodger Blue
-  "rgb(255, 105, 180)", // Hot Pink
-  "rgb(124, 252, 0)", // Lawn Green
-  "rgb(255, 140, 0)", // Dark Orange
   "rgb(75, 0, 130)", // Indigo
-  "rgb(121, 240, 179)", // Light Green
-  "rgb(255, 0, 100)", // Bright Pink
   "rgb(217, 175, 248)", // Light Purple
   "rgb(131, 114, 247)", // Purple
+  "rgb(255, 215, 0)", // Gold
+  "rgb(50, 205, 50)", // Lime Green
+  "rgb(0, 255, 127)", // Spring Green
+  "rgb(124, 252, 0)", // Lawn Green
+  "rgb(121, 240, 179)", // Light Green
 ];
+
 let rows = [];
 let p5Canvas;
 
+function colorToRgba(color, alpha) {
+  if (!color) return `rgba(0, 0, 0, ${alpha})`;
+
+  if (color.startsWith("rgb(")) {
+    const values = color.match(/\d+/g);
+    if (values && values.length >= 3) {
+      return `rgba(${values[0]}, ${values[1]}, ${values[2]}, ${alpha})`;
+    }
+  }
+
+  if (color.startsWith("#")) {
+    const r = parseInt(color.slice(1, 3), 16);
+    const g = parseInt(color.slice(3, 5), 16);
+    const b = parseInt(color.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  return color;
+}
+
+function getRandomColor() {
+  return palette[Math.floor(Math.random() * palette.length)];
+}
+
+function createGradientBackground(color) {
+  return `linear-gradient(90deg, 
+          ${colorToRgba(color, 0.4)} 0%, 
+          ${colorToRgba(color, 0.35)} 5%, 
+          ${colorToRgba(color, 0.28)} 15%, 
+          ${colorToRgba(color, 0.22)} 25%, 
+          ${colorToRgba(color, 0.16)} 30%, 
+          ${colorToRgba(color, 0.12)} 45%, 
+          ${colorToRgba(color, 0.08)} 60%, 
+          ${colorToRgba(color, 0.05)} 75%, 
+          ${colorToRgba(color, 0.02)} 80%, 
+          ${colorToRgba(color, 0.01)} 85%, 
+          transparent 80%, 
+          transparent 100%)`;
+}
+
 function setup() {
-  p5Canvas = window.createCanvas(window.innerWidth, window.innerHeight);
+  p5Canvas = createCanvas(windowWidth, windowHeight);
   p5Canvas.parent("p5-canvas");
   generateRows();
 }
 
 function draw() {
-  window.background(255);
+  background(255);
 
   // Draw all rows
   for (const row of rows) {
@@ -66,36 +100,59 @@ function draw() {
       const wordX = row.x + word.offset;
 
       // Skip if completely off screen
-      if (wordX > window.innerWidth + 100 || wordX < -word.width - 100)
-        continue;
+      if (wordX > windowWidth + 100 || wordX < -word.width - 100) continue;
 
-      // Draw background rectangle with rounded corners
-      window.fill(word.color);
-      window.noStroke();
-      window.rect(wordX, row.y, word.width, row.height, row.height / 2);
+      // Draw gradient background using p5.js drawingContext
+      push();
+
+      // Create gradient with color always fading from left edge
+      const gradient = drawingContext.createLinearGradient(
+        wordX,
+        row.y,
+        wordX + word.width,
+        row.y
+      );
+
+      gradient.addColorStop(0, colorToRgba(word.color, 0.4));
+      gradient.addColorStop(0.05, colorToRgba(word.color, 0.35));
+      gradient.addColorStop(0.1, colorToRgba(word.color, 0.28));
+      gradient.addColorStop(0.15, colorToRgba(word.color, 0.22));
+      gradient.addColorStop(0.2, colorToRgba(word.color, 0.16));
+      gradient.addColorStop(0.35, colorToRgba(word.color, 0.12));
+      gradient.addColorStop(0.6, colorToRgba(word.color, 0.08));
+      gradient.addColorStop(0.75, colorToRgba(word.color, 0.05));
+      gradient.addColorStop(0.85, colorToRgba(word.color, 0.02));
+      gradient.addColorStop(0.9, colorToRgba(word.color, 0.01));
+      gradient.addColorStop(0.95, "rgba(0,0,0,0)");
+      gradient.addColorStop(1.0, "rgba(0,0,0,0)");
+
+      // Set the gradient as fill style
+      drawingContext.fillStyle = gradient;
+      noStroke();
+
+      // Draw rounded rectangle with gradient
+      rect(wordX, row.y, word.width, row.height, row.height / 2);
 
       // Draw text
-      window.fill(255);
-      window.textAlign(window.CENTER, window.CENTER);
-      window.text(
-        word.text,
-        wordX + word.width / 2,
-        row.y + row.height / 2 + 2
-      );
+      fill(0, 0, 0, 150); // Semi-transparent black text
+      textAlign(CENTER, CENTER);
+      text(word.text, wordX + word.width / 2, row.y + row.height / 2 + 2);
+
+      pop();
     }
 
     // Reset row position when it goes off screen
-    if (row.speed > 0 && row.x > window.innerWidth) {
+    if (row.speed > 0 && row.x > windowWidth) {
       row.x = -row.totalWidth;
     } else if (row.speed < 0 && row.x + row.totalWidth < 0) {
-      row.x = window.innerWidth;
+      row.x = windowWidth;
     }
   }
 }
 
 function generateRows() {
   rows = [];
-  const rowHeight = window.innerHeight / 12;
+  const rowHeight = windowHeight / 12;
 
   // Calculate font size and padding based on row height
   const fontSize = Math.floor(rowHeight * 0.45); // Font size is 45% of row height
@@ -103,17 +160,16 @@ function generateRows() {
   const totalHorizontalPadding = padding * 2;
 
   // Set font properties
-  window.textFont("Arial", fontSize);
-  window.textStyle(window.BOLD);
+  textFont("Arial", fontSize);
 
-  const numRows = Math.ceil(window.innerHeight / rowHeight) + 3; // Add extra rows for better coverage
+  const numRows = Math.ceil(windowHeight / rowHeight) + 3; // Add extra rows for better coverage
 
   for (let i = 0; i < numRows; i++) {
     const row = {
       y: i * rowHeight,
       height: rowHeight,
       x: 0,
-      speed: window.random(-2, 2),
+      speed: random(-2, 2),
       words: [],
       totalWidth: 0,
     };
@@ -124,37 +180,40 @@ function generateRows() {
     }
 
     // Calculate how many words we need to fill the screen width
-    const targetWidth = window.innerWidth * 3; // Increased to 300% for better coverage
+    const targetWidth = windowWidth * 3; // Increased to 300% for better coverage
     let currentOffset = 0;
 
     while (currentOffset < targetWidth) {
       let word;
-      let wordColor;
+      let color1, color2;
 
       // Ensure same word doesn't appear consecutively
       do {
-        word = window.random(words);
+        word = random(words);
       } while (
         row.words.length > 0 &&
         row.words[row.words.length - 1].text === word
       );
 
-      const wordWidth = window.textWidth(word) + totalHorizontalPadding;
+      const wordWidth = textWidth(word) + totalHorizontalPadding;
 
-      // Ensure same color doesn't appear consecutively
-      do {
-        wordColor = window.random(palette);
-      } while (
+      // Get one random color, always from left
+      const color = getRandomColor();
+
+      // Ensure color is different from previous word
+      let finalColor = color;
+      while (
         row.words.length > 0 &&
-        row.words[row.words.length - 1].color.toString() ===
-          wordColor.toString()
-      );
+        row.words[row.words.length - 1].color === finalColor
+      ) {
+        finalColor = getRandomColor();
+      }
 
       row.words.push({
         text: word,
         width: wordWidth,
         offset: currentOffset,
-        color: wordColor,
+        color: finalColor,
       });
 
       currentOffset += wordWidth;
@@ -164,10 +223,10 @@ function generateRows() {
 
     if (row.speed > 0) {
       // For rightward moving rows, start with words visible from the left
-      row.x = window.random(-row.totalWidth * 0.5, 0);
+      row.x = random(-row.totalWidth * 0.5, 0);
     } else {
       // For leftward moving rows, start with words visible from the right
-      row.x = window.random(window.innerWidth * 0.5, window.innerWidth);
+      row.x = random(windowWidth * 0.5, windowWidth);
     }
 
     rows.push(row);
@@ -175,12 +234,12 @@ function generateRows() {
 }
 
 function windowResized() {
-  window.resizeCanvas(window.innerWidth, window.innerHeight);
+  resizeCanvas(windowWidth, windowHeight);
   generateRows();
 }
 
 function keyPressed() {
-  if (window.key === "r" || window.key === "R") {
+  if (key === "r" || key === "R") {
     generateRows();
   }
 }
@@ -241,7 +300,8 @@ function buildFoundDivs(filterItem, inList) {
         newDiv.textContent = valN;
         newDiv.className = "searchResult";
 
-        newDiv.style.backgroundColor = palette[colorIndex % palette.length];
+        const color = palette[colorIndex % palette.length];
+        newDiv.style.background = createGradientBackground(color);
         colorIndex++;
 
         destDiv.appendChild(newDiv);
@@ -289,21 +349,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Set colorful link backgrounds with gradients
 document.addEventListener("DOMContentLoaded", () => {
   const links = document.querySelectorAll(".colorful-link");
-
-  // Shuffle colors
-  const shuffled = palette.sort(() => 0.5 - Math.random());
+  const shuffled = [...palette].sort(() => 0.5 - Math.random());
 
   links.forEach((link, i) => {
-    link.style.backgroundColor = shuffled[i % shuffled.length];
+    const color = shuffled[i % shuffled.length];
+    link.style.background = createGradientBackground(color);
   });
 });
 
 // Auto-fill input when clicking example words
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".example-word").forEach((word) => {
-    word.style.cursor = "pointer"; // make it look clickable
+    word.style.cursor = "pointer";
 
     word.addEventListener("click", () => {
       document.getElementById("type").value = word.textContent;
